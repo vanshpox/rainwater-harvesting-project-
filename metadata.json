@@ -1,0 +1,6 @@
+{
+  "name": "Smart Rainwater Harvesting System for College Campuses",
+  "description": "B.Tech Engineering Dashboard & Rainwater Harvesting Analytics for educational institutions featuring Indian meteorological presets, storage optimization, sustainability scoring, and offline viva-ready reports.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,997 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Rainwater Harvesting System | DROP by Vansh Kohli (AI&amp;DS)</title>
+    <meta name="description" content="DROP (Data-driven Rainwater Optimisation Platform) - B.Tech Mini Project by Vansh Kohli, Department of AI &amp; DS (2nd Year). Calculates potential yields, storage sizing, and sustainability scores." />
+    <meta property="og:title" content="Smart Rainwater Harvesting System | DROP by Vansh Kohli" />
+    <meta property="og:description" content="DROP: Data-driven Rainwater Optimisation Platform by Vansh Kohli, Dept. of AI &amp; DS 2nd Year." />
+    <meta property="og:type" content="website" />
+    
+    <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    
+    <!-- Application Stylesheet -->
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <!-- Top Navigation Bar - Strict 3-zone contract -->
+    <header class="top-nav">
+      <!-- Zone 1: Single text element wordmark -->
+      <a href="#" class="nav-brand">
+        <span class="brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+          </svg>
+        </span>
+        <span>AquaCampus · DROP</span>
+      </a>
+
+      <!-- Zone 2: Clean single-line text navigation links -->
+      <nav class="nav-links">
+        <a href="#calculator" class="nav-link">Calculator</a>
+        <a href="#analytics" class="nav-link">Analytics</a>
+        <a href="#sustainability" class="nav-link">Sustainability Score</a>
+        <a href="#architecture" class="nav-link">Architecture</a>
+        <a href="#viva" class="nav-link">Viva Center</a>
+        <a href="#about" class="nav-link">About Project</a>
+      </nav>
+
+      <!-- Zone 3: Actions (Author pill, DROP AI button, Theme Toggle & Report Export) -->
+      <div class="nav-actions">
+        <div class="author-pill hidden md:inline-flex">
+          <span>By <strong>Vansh Kohli</strong> (AI&amp;DS 2nd Yr)</span>
+        </div>
+        <button id="open-drop-nav-btn" class="btn btn-secondary" title="Open DROP AI Assistant">
+          <span class="drop-btn-pulse"></span>
+          <span>Ask DROP AI</span>
+        </button>
+        <button id="theme-toggle-btn" class="btn-icon" aria-label="Toggle theme" title="Toggle Dark/Light Mode">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        <button id="export-nav-btn" class="btn btn-primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Export Report
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Container -->
+    <main>
+      <!-- Hero Section -->
+      <section class="hero-section">
+        <div class="hero-grid">
+          <div>
+            <div class="hero-meta">
+              <span>B.Tech Project by <strong>Vansh Kohli</strong></span>
+              <span aria-hidden="true">·</span>
+              <span>Department of AI &amp; DS (2nd Year)</span>
+              <span aria-hidden="true">·</span>
+              <span>DROP Optimization Platform</span>
+            </div>
+            <h1 class="hero-title">
+              Smart Rainwater Harvesting System for <span class="gradient-text">College Campuses</span>
+            </h1>
+            <p class="hero-description">
+              Powered by <strong>DROP</strong> (Data-driven Rainwater Optimisation Platform), an intelligent hydrological simulation and campus sustainability dashboard developed by <strong>Vansh Kohli</strong> (AI &amp; DS Department, 2nd Year). Designed to size rooftop catchment systems, compute seasonal water yields, design percolation recharge pits, and eliminate municipal tanker dependency.
+            </p>
+            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+              <a href="#calculator" class="btn btn-primary" style="padding: 0.65rem 1.25rem;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+                  <line x1="8" y1="6" x2="16" y2="6"></line>
+                  <line x1="16" y1="14" x2="16" y2="18"></line>
+                  <path d="M16 10h.01"></path>
+                  <path d="M12 10h.01"></path>
+                  <path d="M8 10h.01"></path>
+                  <path d="M12 14h.01"></path>
+                  <path d="M8 14h.01"></path>
+                  <path d="M12 18h.01"></path>
+                  <path d="M8 18h.01"></path>
+                </svg>
+                Launch Campus Calculator
+              </a>
+              <button id="open-drop-hero-btn" class="btn btn-secondary" style="padding: 0.65rem 1.25rem;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                </svg>
+                Ask DROP AI Advisor
+              </button>
+              <button id="viva-guide-btn" class="btn btn-secondary" style="padding: 0.65rem 1.25rem;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                </svg>
+                Viva Voce Guide
+              </button>
+            </div>
+          </div>
+          <div class="hero-image-wrapper">
+            <img 
+              src="/src/assets/images/campus_rwh_hero_1794358830168.jpg" 
+              alt="Isometric 3D architectural illustration of a college campus with smart rainwater harvesting infrastructure"
+              class="hero-image"
+              loading="eager"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- High-Level Statistics Strip -->
+      <section class="stats-strip">
+        <div class="stat-card">
+          <div class="stat-label">Annual Campus Harvest</div>
+          <div class="stat-value tabular-nums" id="stat-annual-harvest">35.4 Lakh L</div>
+          <div class="stat-footnote">Usable non-potable water</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Estimated Annual Savings</div>
+          <div class="stat-value tabular-nums" id="stat-annual-savings">₹1.59 L</div>
+          <div class="stat-footnote">At municipal tariff ₹45/kL</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Aquifer Groundwater Recharge</div>
+          <div class="stat-value tabular-nums" id="stat-recharge">12.4 Lakh L</div>
+          <div class="stat-footnote">Through injection borewells</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Sustainability Score</div>
+          <div class="stat-value tabular-nums" id="stat-campus-score">84 / 100</div>
+          <div class="stat-footnote">Gold Green Campus</div>
+        </div>
+      </section>
+
+      <!-- Calculator Section -->
+      <section id="calculator" class="section-wrapper">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Rainwater Harvesting Sizing & Calculator</h2>
+            <p class="section-subtitle">Real-time hydrological estimation for academic blocks, hostels, and administrative roofs.</p>
+          </div>
+          <button id="reset-btn" class="btn btn-secondary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="1 4 1 10 7 10"></polyline>
+              <polyline points="23 20 23 14 17 14"></polyline>
+              <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
+            </svg>
+            Reset Defaults
+          </button>
+        </div>
+
+        <!-- Indian City Quick Presets -->
+        <div class="city-presets-container">
+          <div class="city-presets-header">
+            <div class="city-presets-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <span>Meteorological Presets: Select Indian City (IMD Long-Term Annual Precipitation)</span>
+            </div>
+          </div>
+          <div id="city-pill-grid" class="city-pill-grid">
+            <!-- Dynamic City Buttons injected by script.js -->
+          </div>
+        </div>
+
+        <!-- Calculator Input Grid & Results Matrix -->
+        <div class="calculator-grid">
+          <!-- Input Controls Form -->
+          <div class="calc-panel">
+            <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 1.25rem; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                <polyline points="2 17 12 22 22 17"></polyline>
+                <polyline points="2 12 12 17 22 12"></polyline>
+              </svg>
+              Campus Hydrological &amp; Infrastructure Parameters
+            </h3>
+
+            <!-- Roof Area -->
+            <div class="form-group">
+              <div class="form-label-row">
+                <label for="roof-area-input" class="form-label">
+                  Roof Catchment Area (per building)
+                </label>
+                <span class="form-value-badge tabular-nums" id="roof-area-val">4,500 m²</span>
+              </div>
+              <input type="range" id="roof-area-slider" class="form-slider" min="200" max="15000" step="100" value="4500" aria-label="Roof area slider" />
+              <input type="number" id="roof-area-input" class="form-input tabular-nums" min="50" max="50000" value="4500" style="margin-top: 0.5rem;" aria-label="Roof catchment area" />
+            </div>
+
+            <!-- Number of Campus Buildings -->
+            <div class="form-group">
+              <div class="form-label-row">
+                <label for="buildings-input" class="form-label">
+                  Number of Campus Building Blocks
+                </label>
+                <span class="form-value-badge tabular-nums" id="buildings-val">6 Blocks</span>
+              </div>
+              <input type="range" id="buildings-slider" class="form-slider" min="1" max="25" step="1" value="6" aria-label="Number of buildings slider" />
+              <input type="number" id="buildings-input" class="form-input tabular-nums" min="1" max="50" value="6" style="margin-top: 0.5rem;" aria-label="Number of campus buildings" />
+            </div>
+
+            <!-- Annual Rainfall -->
+            <div class="form-group">
+              <div class="form-label-row">
+                <label for="rainfall-input" class="form-label">
+                  Annual Precipitation (Rainfall)
+                </label>
+                <span class="form-value-badge tabular-nums" id="rainfall-val">970 mm</span>
+              </div>
+              <input type="range" id="rainfall-slider" class="form-slider" min="200" max="12000" step="50" value="970" aria-label="Annual rainfall slider" />
+              <input type="number" id="rainfall-input" class="form-input tabular-nums" min="50" max="15000" value="970" style="margin-top: 0.5rem;" aria-label="Annual rainfall in mm" />
+            </div>
+
+            <!-- Runoff Coefficient -->
+            <div class="form-group">
+              <div class="form-label-row">
+                <label for="runoff-select" class="form-label">
+                  Roof Catchment Surface & Runoff Coefficient (C)
+                </label>
+                <span class="form-value-badge tabular-nums" id="runoff-val">0.85</span>
+              </div>
+              <select id="runoff-select" class="form-select" aria-label="Runoff coefficient selector">
+                <option value="0.85" selected>Reinforced Concrete Flat Roof (RCC) — C = 0.85</option>
+                <option value="0.90">Galvanized Corrugated Metal Sheet — C = 0.90</option>
+                <option value="0.80">Mangalore Clay Tiled Roof — C = 0.80</option>
+                <option value="0.75">Paved Interlocking Brick Catchment — C = 0.75</option>
+                <option value="0.65">Asphalt Bitumen Gravel Surface — C = 0.65</option>
+              </select>
+            </div>
+
+            <!-- Storage Tank Capacity -->
+            <div class="form-group">
+              <div class="form-label-row">
+                <label for="tank-input" class="form-label">
+                  Underground Storage Reservoir Tank Capacity
+                </label>
+                <span class="form-value-badge tabular-nums" id="tank-val">250 kL</span>
+              </div>
+              <input type="range" id="tank-slider" class="form-slider" min="10000" max="1000000" step="10000" value="250000" aria-label="Storage tank slider" />
+              <input type="number" id="tank-input" class="form-input tabular-nums" min="5000" max="3000000" step="5000" value="250000" style="margin-top: 0.5rem;" aria-label="Storage tank capacity in Litres" />
+            </div>
+
+            <!-- Campus Daily Non-Potable Water Demand -->
+            <div class="form-group">
+              <div class="form-label-row">
+                <label for="campus-demand-input" class="form-label">
+                  Campus Daily Non-Potable Demand (Gardening, Flushing, Labs)
+                </label>
+              </div>
+              <input type="number" id="campus-demand-input" class="form-input tabular-nums" min="1000" max="100000" step="1000" value="18000" aria-label="Campus daily water demand in Litres" />
+            </div>
+          </div>
+
+          <!-- Real-Time Results Matrix -->
+          <div>
+            <div class="results-matrix">
+              <!-- KPI 1 -->
+              <div class="result-kpi-card">
+                <div class="kpi-title">Total Annual Harvested Yield</div>
+                <div class="kpi-number tabular-nums" id="res-annual-harvest-l">3,540,600</div>
+                <div class="kpi-subtext">
+                  Equivalent to <strong id="res-annual-harvest-kl" class="tabular-nums">3,540.6 kL</strong> net usable water
+                </div>
+              </div>
+
+              <!-- KPI 2 -->
+              <div class="result-kpi-card">
+                <div class="kpi-title">Daily Average Collection</div>
+                <div class="kpi-number tabular-nums">
+                  <span id="res-daily-avg-l">9,700</span>
+                  <span class="kpi-unit">L / day</span>
+                </div>
+                <div class="kpi-subtext">Averaged across 365 calendar days</div>
+              </div>
+
+              <!-- KPI 3 -->
+              <div class="result-kpi-card">
+                <div class="kpi-title">Year-1 Financial Cost Savings</div>
+                <div class="kpi-number tabular-nums" style="color: var(--accent-emerald);" id="res-annual-savings">
+                  ₹1,59,327
+                </div>
+                <div class="kpi-subtext">
+                  5-Year Projected Savings: <strong id="res-five-year-savings" class="tabular-nums">₹8,80,392</strong>
+                </div>
+              </div>
+
+              <!-- KPI 4 -->
+              <div class="result-kpi-card">
+                <div class="kpi-title">Groundwater Aquifer Infiltration</div>
+                <div class="kpi-number tabular-nums" style="color: var(--accent-teal);" id="res-recharge-l">
+                  1,239 kL
+                </div>
+                <div class="kpi-subtext">Recharged via percolation borewells</div>
+              </div>
+
+              <!-- KPI 5 -->
+              <div class="result-kpi-card">
+                <div class="kpi-title">Dry-Period Zero-Inflow Buffer</div>
+                <div class="kpi-number tabular-nums" id="res-dry-days">13.9 Days</div>
+                <div class="kpi-subtext">Without external water procurement</div>
+              </div>
+
+              <!-- KPI 6 -->
+              <div class="result-kpi-card">
+                <div class="kpi-title">Storage Tank Annual Turnover</div>
+                <div class="kpi-number tabular-nums" id="res-tank-turnover">14.1x</div>
+                <div class="kpi-subtext">Optimal range: 10x - 20x annual cycles</div>
+              </div>
+            </div>
+
+            <!-- Download PDF Report Card CTA -->
+            <div style="background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1.25rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem;">
+              <div>
+                <div style="font-weight: 700; font-size: 0.95rem; color: var(--text-primary);">
+                  Generate College Project Evaluation Report
+                </div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">
+                  Complete viva-ready technical balance sheet with IS 15797:2008 engineering compliance formulas.
+                </div>
+              </div>
+              <button id="export-report-btn" class="btn btn-primary" style="flex-shrink: 0;">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+                View & Export PDF
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Campus Sustainability Score Section -->
+      <section id="sustainability" class="section-wrapper">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Campus Sustainability Scorecard</h2>
+            <p class="section-subtitle">Comprehensive institutional green campus rating calculated across 4 weighted environmental dimensions.</p>
+          </div>
+        </div>
+
+        <div class="score-hero-container">
+          <!-- Circular Animated Gauge -->
+          <div class="gauge-wrapper">
+            <svg class="circular-gauge" viewBox="0 0 200 200">
+              <circle class="gauge-bg" cx="100" cy="100" r="90" />
+              <circle id="gauge-progress-circle" class="gauge-progress" cx="100" cy="100" r="90" />
+            </svg>
+            <div class="gauge-center-content">
+              <div id="gauge-score-text" class="gauge-score-value tabular-nums">84</div>
+              <div class="gauge-score-label">Score / 100</div>
+              <div id="gauge-grade-badge" class="gauge-grade-badge">Grade A</div>
+            </div>
+          </div>
+
+          <!-- Score Breakdown Bars -->
+          <div>
+            <h3 id="gauge-level-text" style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); margin-bottom: 1.25rem;">
+              Gold Green Campus
+            </h3>
+            
+            <div class="score-details-list">
+              <!-- Item 1: Catchment Scale -->
+              <div>
+                <div class="score-crit-header">
+                  <span>Catchment Planning & Roof Area Coverage</span>
+                  <span id="score-catchment-val" class="tabular-nums">22/25</span>
+                </div>
+                <div class="score-progress-bar-bg">
+                  <div id="score-catchment-fill" class="score-progress-bar-fill" style="width: 88%;"></div>
+                </div>
+              </div>
+
+              <!-- Item 2: Hydrological Efficiency -->
+              <div>
+                <div class="score-crit-header">
+                  <span>Surface Runoff Efficiency & Filtration Yield</span>
+                  <span id="score-efficiency-val" class="tabular-nums">21/25</span>
+                </div>
+                <div class="score-progress-bar-bg">
+                  <div id="score-efficiency-fill" class="score-progress-bar-fill" style="width: 84%;"></div>
+                </div>
+              </div>
+
+              <!-- Item 3: Storage Adequacy -->
+              <div>
+                <div class="score-crit-header">
+                  <span>Storage Tank Sizing & Peak Monsoon Retention</span>
+                  <span id="score-storage-val" class="tabular-nums">22/25</span>
+                </div>
+                <div class="score-progress-bar-bg">
+                  <div id="score-storage-fill" class="score-progress-bar-fill" style="width: 88%;"></div>
+                </div>
+              </div>
+
+              <!-- Item 4: Self-Sufficiency & Groundwater Recharge -->
+              <div>
+                <div class="score-crit-header">
+                  <span>Non-Potable Self-Sufficiency & Aquifer Infiltration</span>
+                  <span id="score-utilization-val" class="tabular-nums">19/25</span>
+                </div>
+                <div class="score-progress-bar-bg">
+                  <div id="score-utilization-fill" class="score-progress-bar-fill" style="width: 76%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Analytics Dashboard -->
+      <section id="analytics" class="section-wrapper">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Hydrological Analytics & Storage Dynamics</h2>
+            <p class="section-subtitle">Predictive seasonal analytics modeling regional monsoon variance and financial returns.</p>
+          </div>
+        </div>
+
+        <div class="charts-grid">
+          <!-- Chart 1: Monthly Collection -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div class="chart-title">Monthly Rainwater Collection Yield</div>
+              <div class="chart-tag">Yield in kL (Kilolitres)</div>
+            </div>
+            <div class="chart-canvas-container">
+              <canvas id="monthly-chart-canvas"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 2: Storage vs Recharge -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div class="chart-title">Water Allocation & Recharge Proportion</div>
+              <div class="chart-tag">Hydrological Routing</div>
+            </div>
+            <div class="chart-canvas-container">
+              <canvas id="storage-chart-canvas"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 3: 5-Year Cumulative Savings -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div class="chart-title">5-Year Cumulative Financial Savings Trend</div>
+              <div class="chart-tag">INR (₹ in Lakhs) with 5% Inflation</div>
+            </div>
+            <div class="chart-canvas-container">
+              <canvas id="savings-chart-canvas"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 4: Environmental Equivalents Dashboard -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <div class="chart-title">Environmental Impact Equivalence Index</div>
+              <div class="chart-tag">Multi-Metric Resource Offsets</div>
+            </div>
+            <div class="chart-canvas-container">
+              <canvas id="impact-chart-canvas"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Environmental Impact Section -->
+      <section class="section-wrapper">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Ecological & Ground Water Impact</h2>
+            <p class="section-subtitle">Measurable environmental benefits delivered to the local aquifer and regional ecosystem.</p>
+          </div>
+        </div>
+
+        <div class="eco-impact-grid">
+          <!-- Eco Card 1 -->
+          <div class="eco-card">
+            <div>
+              <div class="eco-icon-box eco-icon-blue">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="1" y="3" width="15" height="13"></rect>
+                  <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                  <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                  <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                </svg>
+              </div>
+              <div class="eco-title">Water Tankers Displaced</div>
+              <div class="eco-value tabular-nums" id="eco-tankers">354 Tankers</div>
+            </div>
+            <p class="eco-desc">Standard 10,000-Litre commercial diesel trucks eliminated from campus roads annually.</p>
+          </div>
+
+          <!-- Eco Card 2 -->
+          <div class="eco-card">
+            <div>
+              <div class="eco-icon-box eco-icon-emerald">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 10v12"></path>
+                  <path d="M12 10a5 5 0 0 1 5-5c2.5 0 4 1.5 4 4a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5c0-2.5 1.5-4 4-4a5 5 0 0 1 5 5z"></path>
+                </svg>
+              </div>
+              <div class="eco-title">Campus Trees Sustained</div>
+              <div class="eco-value tabular-nums" id="eco-trees">236 Trees</div>
+            </div>
+            <p class="eco-desc">Annual irrigation equivalent for mature canopy shade trees (Neem, Peepal, Gulmohar).</p>
+          </div>
+
+          <!-- Eco Card 3 -->
+          <div class="eco-card">
+            <div>
+              <div class="eco-icon-box eco-icon-amber">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
+                </svg>
+              </div>
+              <div class="eco-title">Avoided Carbon Footprint</div>
+              <div class="eco-value tabular-nums" id="eco-carbon">1,045 kg CO₂</div>
+            </div>
+            <p class="eco-desc">Emissions prevented by eliminating high-pressure municipal pumping and diesel tanker transport.</p>
+          </div>
+
+          <!-- Eco Card 4 -->
+          <div class="eco-card">
+            <div>
+              <div class="eco-icon-box eco-icon-indigo">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2v20"></path>
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+              </div>
+              <div class="eco-title">Aquifer Recharge Volume</div>
+              <div class="eco-value tabular-nums" id="eco-recharge">1,239 kL</div>
+            </div>
+            <p class="eco-desc">Direct subterranean infiltration rejuvenating shallow campus borewells and fighting depletion.</p>
+          </div>
+        </div>
+
+        <!-- Water Conservation Tips Generator Component -->
+        <div class="tips-container">
+          <div class="tip-content-box">
+            <div class="tip-label">Campus Water Conservation Advisory</div>
+            <p id="tip-text" class="tip-text">
+              Install ultrasonic level sensors with automatic shut-off valves on overhead tanks to eliminate overflow losses.
+            </p>
+          </div>
+          <button id="next-tip-btn" class="btn btn-secondary" style="flex-shrink: 0;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+            </svg>
+            Generate Next Tip
+          </button>
+        </div>
+      </section>
+
+      <!-- Project Architecture & Specifications -->
+      <section id="architecture" class="section-wrapper">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Project Architecture &amp; System Specifications</h2>
+            <p class="section-subtitle">System design, hydraulic formulas, automated filtration mechanisms, and DROP optimization rules.</p>
+          </div>
+        </div>
+
+        <div class="architecture-grid">
+          <!-- Problem Statement & Existing vs Proposed -->
+          <div class="arch-card">
+            <h3 class="arch-card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              Problem Statement & Proposed System
+            </h3>
+            <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6;">
+              Educational institutions in India encounter severe groundwater depletion, exorbitant reliance on private water tankers during summer months, and monsoon stormwater urban flooding. Traditional unmonitored systems suffer from clogged filters, overflowing storage sumps, and zero telemetry.
+            </p>
+
+            <div style="margin-top: 1rem;">
+              <strong style="font-size: 0.85rem; color: var(--text-primary);">Key Architectural Innovations:</strong>
+              <ul class="feature-list">
+                <li class="feature-item">
+                  <span class="check-dot"></span>
+                  <span><strong>Automatic First-Flush Diverters:</strong> Mechanically isolates the first 1-2 mm of contaminated runoff carrying rooftop soot, leaves, and dust.</span>
+                </li>
+                <li class="feature-item">
+                  <span class="check-dot"></span>
+                  <span><strong>Dual-Chamber Filtration:</strong> Gravity-fed slow sand media + activated charcoal (GAC) removing suspended solids down to 5 microns.</span>
+                </li>
+                <li class="feature-item">
+                  <span class="check-dot"></span>
+                  <span><strong>Dynamic Spillway & Recharge Well:</strong> When RCC storage reservoir reaches 95% capacity, excess filtered runoff automatically diverts into an injection borewell to recharge deep aquifers.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Hydraulic Mathematical Governing Equations -->
+          <div class="arch-card">
+            <h3 class="arch-card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="4 7 4 4 20 4 20 7"></polyline>
+                <line x1="9" y1="20" x2="15" y2="20"></line>
+                <line x1="12" y1="4" x2="12" y2="20"></line>
+              </svg>
+              Hydrological Governing Formulas
+            </h3>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">
+              Derived from Central Ground Water Board (CGWB) & Bureau of Indian Standards IS: 15797:2008.
+            </p>
+
+            <div class="equation-box">
+              V = A &times; R &times; C &times; &eta;
+            </div>
+
+            <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.6;">
+              Where:<br />
+              &bull; <strong>V</strong> = Harvested Water Yield in Litres / year<br />
+              &bull; <strong>A</strong> = Catchment Area (m&sup2;) = Roof Area &times; Number of Blocks<br />
+              &bull; <strong>R</strong> = Mean Annual Precipitation in mm (1 mm over 1 m&sup2; = 1 Litre)<br />
+              &bull; <strong>C</strong> = Runoff Surface Coefficient (0.85 for concrete RCC)<br />
+              &bull; <strong>&eta;</strong> = Filtration efficiency & first-flush factor (0.90 net yield)
+            </p>
+          </div>
+        </div>
+
+        <!-- Technical Visual Showcase Grid -->
+        <div class="showcase-grid">
+          <!-- Visual 1: Multi-stage Filtration Cutaway -->
+          <div class="showcase-card">
+            <div class="showcase-img-container">
+              <img 
+                src="/src/assets/images/rwh_filtration_system_1794358832151.jpg" 
+                alt="Detailed cutaway technical isometric visualization of a college rainwater harvesting filtration system"
+                class="showcase-img"
+                loading="lazy"
+              />
+            </div>
+            <div class="showcase-content">
+              <h4 class="showcase-title">Multi-Stage Filtration & First-Flush Diverter</h4>
+              <p class="showcase-desc">
+                Engineering schematic detailing coarse leaf deflection screen, buoyant floating ball valve chamber for dirty initial wash, graded silica sand & activated charcoal filter bed, and dual-outlet diversion to underground RCC sump and groundwater injection well.
+              </p>
+            </div>
+          </div>
+
+          <!-- Visual 2: Campus Retention Reservoir & Sensor Telemetry -->
+          <div class="showcase-card">
+            <div class="showcase-img-container">
+              <img 
+                src="/src/assets/images/campus_reservoir_lake_1794358831593.jpg" 
+                alt="Modern eco-friendly university campus rainwater retention reservoir and percolation pond"
+                class="showcase-img"
+                loading="lazy"
+              />
+            </div>
+            <div class="showcase-content">
+              <h4 class="showcase-title">Campus Retention Reservoir & IoT Sensor Array</h4>
+              <p class="showcase-desc">
+                Percolation retention pond equipped with submerged ultrasonic depth telemetry sensors, dissolved oxygen aerators, and overflow bioswales, seamlessly integrating aesthetic campus landscaping with large-scale stormwater flood mitigation.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- College Viva & Examination Prep Center -->
+      <section id="viva" class="section-wrapper">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">College Viva & Examination Prep Center</h2>
+            <p class="section-subtitle">Frequently asked viva voce questions with comprehensive data-driven and hydrological engineering explanations.</p>
+          </div>
+        </div>
+
+        <div class="viva-accordion">
+          <!-- Viva Item 1 -->
+          <div class="viva-item open">
+            <button class="viva-question">
+              <span>Q1. What is the standard hydrological formula used in this project, and why does 1 mm of rain on 1 m² equal 1 Litre?</span>
+              <svg class="viva-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="viva-answer">
+              The governing equation is <strong>V = A &times; R &times; C &times; &eta;</strong>. Mathematically, 1 mm = 0.001 m depth of precipitation. Over an area of 1 m², the volume of water equals 1 m² &times; 0.001 m = 0.001 m³. Since 1 m³ = 1,000 Litres, 0.001 m³ &times; 1,000 = exactly 1 Litre! Hence, depth in millimeters directly translates to Litres per square meter.
+            </div>
+          </div>
+
+          <!-- Viva Item 2 -->
+          <div class="viva-item">
+            <button class="viva-question">
+              <span>Q2. What is the function of a 'First-Flush Diverter' and what volume should be bypassed?</span>
+              <svg class="viva-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="viva-answer">
+              During dry spells, rooftops accumulate soot, industrial particulate matter, bird droppings, and organic matter. The first-flush diverter automatically traps and discards the initial 1 to 2 mm of precipitation (approximately 20 to 25 Litres per 100 m² of roof area). Once the vertical diversion pipe fills, an internal floating rubber ball seals the chamber inlet, allowing subsequent clean rainwater to flow into the primary storage reservoir.
+            </div>
+          </div>
+
+          <!-- Viva Item 3 -->
+          <div class="viva-item">
+            <button class="viva-question">
+              <span>Q3. Why is the Runoff Coefficient (C) for concrete roofs taken as 0.85 rather than 1.0?</span>
+              <svg class="viva-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="viva-answer">
+              Even impermeable concrete roofs experience hydrological losses: depression storage (small puddles on flat roofs), initial absorption into weathered concrete pores, wind drift, and evaporation before water reaches roof drains. According to Bureau of Indian Standards IS 15797:2008, Reinforced Cement Concrete (RCC) retains a runoff coefficient of 0.80 to 0.85. Smooth corrugated metal roofs have higher coefficients (0.90), while clay tiles average 0.75 to 0.80.
+            </div>
+          </div>
+
+          <!-- Viva Item 4 -->
+          <div class="viva-item">
+            <button class="viva-question">
+              <span>Q4. How is the Campus Sustainability Score calculated (0 to 100)?</span>
+              <svg class="viva-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="viva-answer">
+              The score evaluates four 25-point weighted engineering pillars: (1) <strong>Catchment Planning</strong> (total roof coverage across academic and hostel blocks), (2) <strong>Hydrological Efficiency</strong> (surface quality and regional precipitation abundance), (3) <strong>Storage Tank Adequacy</strong> (evaluating whether storage capacity matches 12% to 35% of annual harvest to avoid overflow wastage while maintaining economic tank construction cost), and (4) <strong>Water Offset & Self-Sufficiency</strong> (ratio of harvested yield against campus non-potable demand). Total scores &ge; 90 earn 'Platinum Green Campus' rating.
+            </div>
+          </div>
+
+          <!-- Viva Item 5 -->
+          <div class="viva-item">
+            <button class="viva-question">
+              <span>Q5. What are the legal guidelines and standards governing RWH in educational institutions in India?</span>
+              <svg class="viva-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="viva-answer">
+              Under Central Ground Water Authority (CGWA) and State Municipal By-Laws (such as Bruhat Bengaluru Mahanagara Palike BBMP and Chennai Metro Water), all educational institutions having roof area &gt; 1,000 m² or plot area &gt; 5,000 m² are legally mandated to install rainwater harvesting and recharge systems. The project adheres to IS 15797:2008 ('Roof Top Rainwater Harvesting — Guidelines') and Central Public Health and Environmental Engineering Organisation (CPHEEO) manuals.
+            </div>
+          </div>
+
+          <!-- Viva Item 6 -->
+          <div class="viva-item">
+            <button class="viva-question">
+              <span>Q6. How is groundwater contaminated water prevented when recharging deep borewell aquifers?</span>
+              <svg class="viva-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="viva-answer">
+              Recharging must never directly pump untreated surface water into an aquifer. Before reaching the recharge well, water passes through: (a) Leaf filter screen, (b) First-flush separation chamber, (c) A slow gravity filtration pit containing graded coarse sand (0.5 - 1.0 mm), coarse gravel (2 - 5 mm), and activated charcoal to adsorb dissolved hydrocarbons and heavy metals. Recharging is only conducted through slotted PVC casing pipes anchored into permeable geological strata.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About Project Section -->
+      <section id="about" class="section-wrapper">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">About the Project & Developer</h2>
+            <p class="section-subtitle">Academic project credentials, system methodology, and developer profile.</p>
+          </div>
+        </div>
+
+        <div class="arch-card">
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 1.5rem;">
+            <div>
+              <div style="font-size: 0.75rem; font-weight: 700; color: var(--accent-blue); text-transform: uppercase;">
+                Project Title &amp; Platform
+              </div>
+              <div style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">
+                Smart Rainwater Harvesting System (DROP)
+              </div>
+            </div>
+            <div>
+              <div style="font-size: 0.75rem; font-weight: 700; color: var(--accent-blue); text-transform: uppercase;">
+                Student Developer
+              </div>
+              <div style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">
+                Vansh Kohli · 2nd Year
+              </div>
+            </div>
+            <div>
+              <div style="font-size: 0.75rem; font-weight: 700; color: var(--accent-blue); text-transform: uppercase;">
+                Department
+              </div>
+              <div style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin-top: 0.25rem;">
+                Artificial Intelligence &amp; Data Science (AI &amp; DS)
+              </div>
+            </div>
+          </div>
+
+          <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem;">
+            Developed by student <strong>Vansh Kohli</strong> of the <strong>Department of Artificial Intelligence &amp; Data Science (AI &amp; DS), 2nd Year</strong>, this project implements <strong>DROP</strong> (Data-driven Rainwater Optimisation Platform). DROP replaces static manual assumptions with dynamic mathematical simulations and automated sizing recommendations, maximizing campus water autonomy, financial cost recovery, and regional aquifer replenishment.
+          </p>
+
+          <div style="border-top: 1px solid var(--border-subtle); padding-top: 1rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div style="font-size: 0.8rem; color: var(--text-muted);">
+              <strong>DROP Optimization Scope:</strong> Real-time storage sizing, dry-spell risk estimation, carbon offset calculation, and automated telemetry alerts.
+            </div>
+            <button id="export-report-btn-2" class="btn btn-secondary" onclick="document.getElementById('export-report-btn').click();">
+              Download PDF Report
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Floating DROP AI Assistant Button -->
+    <button id="drop-float-btn" class="drop-float-btn" aria-label="Open DROP AI Assistant">
+      <span class="drop-btn-pulse"></span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+      </svg>
+      <span>Ask DROP AI</span>
+    </button>
+
+    <!-- DROP AI Assistant Modal -->
+    <div id="drop-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-drop-title">
+      <div class="drop-modal-container">
+        <div class="drop-chat-header">
+          <div class="drop-brand-badge">
+            <div class="drop-avatar">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+              </svg>
+            </div>
+            <div class="drop-header-titles">
+              <h3 id="modal-drop-title">DROP AI Assistant</h3>
+              <p>Data-driven Rainwater Optimisation Platform · By Vansh Kohli (AI &amp; DS 2nd Yr)</p>
+            </div>
+          </div>
+          <button id="close-drop-modal" class="btn-icon" aria-label="Close DROP AI modal">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        
+        <div id="drop-messages" class="drop-messages-list">
+          <!-- Dynamic messages rendered here -->
+        </div>
+
+        <div class="drop-quick-prompts">
+          <button class="drop-prompt-chip" data-prompt="How can we achieve a Platinum 95+ score?">
+            Target Platinum 95+ Score
+          </button>
+          <button class="drop-prompt-chip" data-prompt="Optimize tank size for zero overflow">
+            Optimize Tank Sizing
+          </button>
+          <button class="drop-prompt-chip" data-prompt="Calculate investment payback period">
+            Calculate Payback ROI
+          </button>
+          <button class="drop-prompt-chip" data-prompt="Groundwater recharge recommendation">
+            Aquifer Infiltration Strategy
+          </button>
+        </div>
+
+        <form id="drop-chat-form" class="drop-chat-input-row">
+          <input 
+            type="text" 
+            id="drop-user-input" 
+            class="drop-input-box" 
+            placeholder="Ask DROP anything about campus water optimization..." 
+            autocomplete="off"
+            aria-label="Ask DROP AI Assistant"
+          />
+          <button type="submit" class="btn btn-primary" style="padding: 0.6rem 1rem;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+            Send
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Project Report Modal -->
+    <div id="report-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-report-title">
+      <div class="modal-container">
+        <div class="modal-header">
+          <h3 id="modal-report-title" class="modal-title">Campus RWH Feasibility Report</h3>
+          <button id="close-report-modal" class="btn-icon" aria-label="Close modal">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div id="report-modal-body" class="modal-body">
+          <!-- Dynamically populated by script.js -->
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" onclick="document.getElementById('report-modal').classList.remove('active');">Close</button>
+          <button id="print-report-btn" class="btn btn-primary">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 6 2 18 2 18 9"></polyline>
+              <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+              <rect x="6" y="14" width="12" height="8"></rect>
+            </svg>
+            Print / Save as PDF
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Viva Modal -->
+    <div id="viva-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-viva-title">
+      <div class="modal-container">
+        <div class="modal-header">
+          <h3 id="modal-viva-title" class="modal-title">B.Tech Viva Voce Examination Guide</h3>
+          <button id="close-viva-modal" class="btn-icon" aria-label="Close viva modal">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h4 style="font-weight: 700; margin-bottom: 0.5rem; color: var(--accent-blue);">Examiner Grading Criteria & Evaluation Matrix</h4>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1rem;">
+            Project presentation key points by <strong>Vansh Kohli</strong> (Department of AI &amp; DS, 2nd Year):
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.85rem; color: var(--text-secondary);">
+            <div style="background: var(--bg-secondary); padding: 0.75rem 1rem; border-radius: 6px;">
+              <strong>1. Hydrological Calculation Rigor:</strong> Explain why 1 mm rain on 1 m² = 1 L, explain the Runoff Coefficient ($C$) values from IS 15797:2008, and mention the 10% first-flush deduction factor.
+            </div>
+            <div style="background: var(--bg-secondary); padding: 0.75rem 1rem; border-radius: 6px;">
+              <strong>2. Storage Reservoir &amp; Infiltration Sizing Logic:</strong> Building an excessively large tank for 100% of monsoon deluge is cost-prohibitive. An optimal annual tank turnover of 10x - 20x yields the highest ROI, while routing surplus monsoon runoff into groundwater recharge wells.
+            </div>
+            <div style="background: var(--bg-secondary); padding: 0.75rem 1rem; border-radius: 6px;">
+              <strong>3. Environmental & Financial Payback:</strong> Cite the ₹0.045/L municipal tanker tariff rate and 5-year cumulative ROI, alongside mature tree hydration and carbon emission reduction from avoided pumping.
+            </div>
+            <div style="background: var(--bg-secondary); padding: 0.75rem 1rem; border-radius: 6px;">
+              <strong>4. AI &amp; Data-Driven Architecture:</strong> Highlight the DROP (Data-driven Rainwater Optimisation Platform) optimization engine, real-time parametric scenario modeling, and predictive seasonal rainfall analytics.
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" onclick="document.getElementById('viva-modal').classList.remove('active');">Got it</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Application Footer -->
+    <footer class="app-footer">
+      <div class="footer-inner">
+        <div>
+          <div style="font-weight: 700; color: var(--text-primary); font-size: 0.95rem;">
+            Smart Rainwater Harvesting System for College Campuses · DROP Platform
+          </div>
+          <p class="footer-copy">
+            B.Tech Mini Project · Created by student <strong>Vansh Kohli</strong> · Department of Artificial Intelligence &amp; Data Science (AI &amp; DS), 2nd Year
+          </p>
+        </div>
+        <div class="footer-badges">
+          <span>DROP Platform</span>
+          <span aria-hidden="true">·</span>
+          <span>Vansh Kohli</span>
+          <span aria-hidden="true">·</span>
+          <span>Dept of AI &amp; DS (2nd Year)</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Application Script Module -->
+    <script type="module" src="/script.js"></script>
+  </body>
+</html>
